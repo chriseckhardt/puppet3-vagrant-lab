@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.define :puppet do |puppet_server|
+  config.vm.define :puppetmaster do |puppet_server|
     puppet_server.vm.box = "puppet"
     puppet_server.vm.box_url = "http://vagrant-jls.objects.dreamhost.com/CentOS-6.3-x86_64-minimal.box"
     puppet_server.vm.hostname = "puppet.vagrant.localdomain"
