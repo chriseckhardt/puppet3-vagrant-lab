@@ -1,0 +1,7 @@
+└─┬ puppetlabs-puppetdb (v1.6.0)
+  ├── cprice404-inifile (v0.10.4)
+  ├── puppetlabs-firewall (v0.4.1)
+  ├─┬ puppetlabs-postgresql (v2.4.1)
+  │ ├── puppetlabs-apt (v1.2.0)
+  │ └── ripienaar-concat (v0.2.0)
+  └── puppetlabs-stdlib (v4.1.0)
