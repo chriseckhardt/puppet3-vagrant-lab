@@ -1,3 +1,7 @@
 *~
 *.un
 .vagrant
+puppet/modules/firewall
+puppet/modules/postgresql
+puppet/modules/puppetdb
+puppet/modules/stdlib
