@@ -64,7 +64,6 @@ class profile::base {
 
 
 class profile::puppetserver {
-  class {'puppetdb': }
   class {'puppetdb::master::config': }
 }
 
