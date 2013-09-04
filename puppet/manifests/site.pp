@@ -43,21 +43,21 @@ class profile::hosts::dev {
   host {'puppet':
     ensure       => present,
     ip           => '172.0.10.10',
-    name         => 'puppet.vagrant.localdomian',
+    name         => 'puppet.vagrant.localdomain',
     host_aliases => 'puppet',
   }
 
   host {'puppetdb':
     ensure       => present,
     ip           => '172.0.10.11',
-    name         => 'puppetdb.vagrant.localdomian',
+    name         => 'puppetdb.vagrant.localdomain',
     host_aliases => 'puppetdb',
   }
 
   host {'postgres':
     ensure       => present,
     ip           => '172.0.10.12',
-    name         => 'postgres.vagrant.localdomian',
+    name         => 'postgres.vagrant.localdomain',
     host_aliases => 'postgres',
   }
 }
