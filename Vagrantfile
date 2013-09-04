@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     postgres.vm.hostname = "postgres.vagrant.localdomain"
     postgres.vm.network :forwarded_port, guest: 22, host:2226, auto_correct: true
     postgres.vm.network :forwarded_port, guest: 5432, host: 5432
-    postgres.vm.network :private_network, ip: "172.0.10.12"
+    postgres.vm.network :private_network, ip: "192.168.10.12"
     postgres.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
@@ -29,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppetdb.vm.hostname = "puppetdb.vagrant.localdomain"
     puppetdb.vm.network :forwarded_port, guest: 22, host:2225, auto_correct: true
     puppetdb.vm.network :forwarded_port, guest: 8081, host: 8081
-    puppetdb.vm.network :private_network, ip: "172.0.10.11"
+    puppetdb.vm.network :private_network, ip: "192.168.10.11"
     puppetdb.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
@@ -47,7 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet_server.vm.hostname = "puppet.vagrant.localdomain"
     puppet_server.vm.network :forwarded_port, guest: 22, host:2224, auto_correct: true
     puppet_server.vm.network :forwarded_port, guest: 8140, host: 8140
-    puppet_server.vm.network :private_network, ip: "172.0.10.10"
+    puppet_server.vm.network :private_network, ip: "192.168.10.10"
     puppet_server.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
