@@ -1,12 +1,12 @@
-[submodule "modules/puppetdb"]
+[submodule "puppet/modules/puppetdb"]
 	path = puppet/modules/puppetdb
 	url = https://github.com/puppetlabs/puppetlabs-puppetdb.git
-[submodule "modules/firewall"]
+[submodule "puppet/modules/firewall"]
 	path = puppet/modules/firewall
 	url = https://github.com/puppetlabs/puppetlabs-firewall.git
-[submodule "modules/postgresql"]
+[submodule "puppet/modules/postgresql"]
 	path = puppet/modules/postgresql
 	url = https://github.com/puppetlabs/puppetlabs-postgresql.git
-[submodule "modules/stdlib"]
+[submodule "puppet/modules/stdlib"]
 	path = puppet/modules/stdlib
 	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
