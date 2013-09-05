@@ -20,6 +20,25 @@ This uses the CentOS 6.4 vagrantbox provided by PuppetLabs
     vagrant ssh puppetmaster
 ```
 
+There's a chicken/egg scenario where PuppetDB needs to acquire its SSL
+certificate from the Puppet CA in order to fully configure itself.  Until I can
+get a reasonable automation wrapped around it, I suggest doing the following:
+
+1. Spin up the puppetmaster and start a puppetmaster process.
+2. Spin up postgres.
+3. Spin up puppetdb.
+4. _vagrant ssh puppetdb_
+5. Inside the puppetdb (as root):
+
+```bash
+    puppet apply --verbose --onetime --no-daemonize
+```
+
+6. Sign the new cert request on the _puppetmaster_.
+7. On the _puppetdb_, run _puppetdb-ssl-setup_ to configure SSL.
+8. Now you should be able to restart the puppetmaster process and have a fully
+   working stack.
+
 
 ## Caveats
 This is a work in progress and may not work at all.

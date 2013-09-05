@@ -55,6 +55,7 @@ class role::puppetdb::dev inherits role::puppetdb {
 
 # Profile Definitions
 class profile::base {
+  include stdlib
 
   anchor {'begin': }
   anchor {'end': }
@@ -72,21 +73,15 @@ class profile::base {
 
 
 class profile::puppetserver {
-
-  include stdlib
-
-  class {'puppetdb::master::config': }
-
-  Anchor['begin'] ->
-  Package['puppetlabs-release'] ->
-  Class['puppetdb::master::config'] ->
-  Anchor['end']
+  package {'puppet-server':
+    ensure => installed,
+  }
 }
 
 
 class profile::puppetserver::dev inherits profile::puppetserver {
 
-  Class['puppetdb::master::config'] {
+  class {'puppetdb::master::config':
     puppetdb_server => 'puppetdb.vagrant.localdomain',
   }
 
@@ -103,27 +98,26 @@ class profile::puppetserver::dev inherits profile::puppetserver {
     name         => 'postgres.vagrant.localdomain',
     host_aliases => 'postgres',
   }
+
+  Anchor['begin'] ->
+  Package['puppetlabs-release'] ->
+  Class['puppetdb::master::config'] ->
+  Anchor['end']
 }
 
 
-class profile::postgresql {
+class profile::postgresql {}
 
-  include stdlib
 
-  class {'puppetdb::database::postgresql': }
+class profile::postgresql::dev inherits profile::postgresql {
+  class {'puppetdb::database::postgresql':
+    listen_addresses => '0.0.0.0',
+  }
 
   Anchor['begin'] ->
   Package['puppetlabs-release'] ->
   Class['puppetdb::database::postgresql'] ->
   Anchor['end']
-}
-
-
-class profile::postgresql::dev inherits profile::postgresql {
-
-  Class['puppetdb::database::postgresql'] {
-    listen_addresses => '0.0.0.0',
-  }
 
   host {'puppet':
     ensure       => present,
@@ -141,23 +135,21 @@ class profile::postgresql::dev inherits profile::postgresql {
 }
 
 
-class profile::puppetdb {
-  include stdlib
-
-  class {'puppetdb::server': }
-
-  Anchor['begin'] ->
-  Package['puppetlabs-release'] ->
-  Class['puppetdb::server'] ->
-  Anchor['end']
-}
+class profile::puppetdb {}
 
 
 class profile::puppetdb::dev inherits profile::puppetdb {
 
-  Class['puppetdb::server'] {
-    database_host => 'postgres.vagrant.localdomain',
+  class {'puppetdb::server':
+    database_host      => 'postgres.vagrant.localdomain',
+    ssl_listen_address => '0.0.0.0',
   }
+
+  Anchor['begin'] ->
+  Host['postgres'] ->
+  Package['puppetlabs-release'] ->
+  Class['puppetdb::server'] ->
+  Anchor['end']
 
   host {'puppet':
     ensure       => present,
