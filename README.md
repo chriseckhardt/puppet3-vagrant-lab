@@ -31,7 +31,7 @@ get a reasonable automation wrapped around it, I suggest doing the following:
 5. Inside the puppetdb (as root):
 
 ```bash
-    puppet apply --verbose --onetime --no-daemonize
+    puppet agent --verbose --onetime --no-daemonize
 ```
 
 6. Sign the new cert request on the _puppetmaster_.
