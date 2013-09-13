@@ -15,25 +15,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     postgres.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
+    postgres.vm.provision :shell, path: "./scripts/provision_pg.sh"
     postgres.vm.provision :puppet do |puppet|
-      puppet.manifests_path = "puppet/manifests"
-      puppet.module_path = "puppet/modules"
-      puppet.manifest_file = "site.pp"
-      puppet.options = "--verbose --debug --modulepath /vagrant/puppet/modules"
-    end
-  end
-
-  config.vm.define :puppetdb do |puppetdb|
-    puppetdb.vm.box = "centos_6_3_x86_64"
-    puppetdb.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
-    puppetdb.vm.hostname = "puppetdb.vagrant.localdomain"
-    puppetdb.vm.network :forwarded_port, guest: 22, host:2225, auto_correct: true
-    puppetdb.vm.network :forwarded_port, guest: 8081, host: 8081
-    puppetdb.vm.network :private_network, ip: "192.168.10.11"
-    puppetdb.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048"]
-    end
-    puppetdb.vm.provision :puppet do |puppet|
       puppet.manifests_path = "puppet/manifests"
       puppet.module_path = "puppet/modules"
       puppet.manifest_file = "site.pp"
@@ -51,7 +34,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet_server.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
+    puppet_server.vm.provision :shell, path: "./scripts/provision_pm.sh"
     puppet_server.vm.provision :puppet do |puppet|
+      puppet.manifests_path = "puppet/manifests"
+      puppet.module_path = "puppet/modules"
+      puppet.manifest_file = "site.pp"
+      puppet.options = "--verbose --debug --modulepath /vagrant/puppet/modules"
+    end
+  end
+
+  config.vm.define :puppetdb do |puppetdb|
+    puppetdb.vm.box = "centos_6_3_x86_64"
+    puppetdb.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
+    puppetdb.vm.hostname = "puppetdb.vagrant.localdomain"
+    puppetdb.vm.network :forwarded_port, guest: 22, host:2225, auto_correct: true
+    puppetdb.vm.network :forwarded_port, guest: 8081, host: 8081
+    puppetdb.vm.network :private_network, ip: "192.168.10.11"
+    puppetdb.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    puppetdb.vm.provision :shell, path: "./scripts/provision_db.sh"
+    puppetdb.vm.provision :puppet do |puppet|
       puppet.manifests_path = "puppet/manifests"
       puppet.module_path = "puppet/modules"
       puppet.manifest_file = "site.pp"

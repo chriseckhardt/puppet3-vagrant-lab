@@ -62,19 +62,8 @@ class profile::base {
   anchor {'begin': }
   anchor {'end': }
 
-  package {'puppetlabs-release':
-    ensure   => installed,
-    source   => 'http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm',
-    provider => 'rpm',
-  }
-
   package {['telnet','nc']:
     ensure => installed,
-  }
-
-  exec {'install_epel':
-    command => 'rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm',
-    user    => 'root',
   }
 }
 
@@ -103,7 +92,6 @@ class profile::puppet::server::dev inherits profile::puppet::server {
   }
 
   Anchor['begin'] ->
-  Package['puppetlabs-release'] ->
   Class['puppetdb::master::config'] ->
   Anchor['end']
 }
@@ -111,10 +99,6 @@ class profile::puppet::server::dev inherits profile::puppet::server {
 
 class profile::mcollective::server {
 
-  exec {'import_rabbitmq_signing_key':
-    command =>'rpm --import http://www.rabbitmq.com/rabbitmq-signing-key-public.asc',
-    user => 'root',
-  }
 }
 
 
@@ -151,7 +135,6 @@ class profile::mcollective::server::dev inherits profile::mcollective::server {
   }
 
   Anchor['begin'] ->
-  Package['puppetlabs-release'] ->
   Exec['install_epel'] ->
   Exec['import_rabbitmq_signing_key'] ->
   Class['rabbitmq'] ->
@@ -183,7 +166,6 @@ class profile::postgresql::dev inherits profile::postgresql {
   }
 
   Anchor['begin'] ->
-  Package['puppetlabs-release'] ->
   Class['puppetdb::database::postgresql'] ->
   Anchor['end']
 }
@@ -215,7 +197,6 @@ class profile::puppetdb::dev inherits profile::puppetdb {
 
   Anchor['begin'] ->
   Host['postgres'] ->
-  Package['puppetlabs-release'] ->
   Class['puppetdb::server'] ->
   Anchor['end']
 }
