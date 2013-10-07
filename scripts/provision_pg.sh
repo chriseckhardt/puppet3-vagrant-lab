@@ -6,6 +6,11 @@ set -e
 
 iptables -t filter -I INPUT 1 -p tcp --dport 5432 -j ACCEPT
 
+# Install PostgreSQL Repos
+rpm -Uvh \
+http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/pgdg-centos93-9.3-1.noarch.rpm \
+2>/dev/null
+
 # Install EPEL
 rpm -Uvh \
 http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm \
